@@ -1,5 +1,44 @@
-# README Usuarios
+1.	Cree un nuevo proyecto usando el comando rails new proyecto_inicio_sesion.
+rails new proyecto_inicio_sesion
 
+2.	Cree un nuevo modelo llamado 'Usuario' con la información anterior.
+rails g model Usuario first_name:string last_name:string email_address:string age:integer
+
+3.	Rails inmediatamente creará el campo ID como clave primaria, que se incrementa automáticamente así como las marcas de tiempo created_at  y  updated_at.
+rails db:migrate
+
+4.	Cree algunos registros en la tabla usuarios utilizando la consola de Rails.
+rails c
+Usuario.create(first_name:"Diego", last_name:"Hernandez", email_address:"email1@email.com", age:36)
+Usuario.create(first_name:"Andres", last_name:"Ramos", email_address:"email2@email.com", age:30)
+Usuario.create(first_name:"Angelica", last_name:"Martinez", email_address:"email3@email.com", age:39)
+Usuario.create(first_name:"Maria", last_name:"Ramos", email_address:"email4@email.com", age:9)
+Usuario.create(first_name:"", last_name:"Martinez", email_address:"email5@email.com", age:9)
+
+5.	Ahora, agregue algunas validaciones al modelo para que:
+5.1.	Requiera los cuatro campos.
+validates :first_name, :last_name, :email_address, :age, presence: true
+
+5.2.	La edad tiene que ser numérica.
+validates :age, numericality: { only_integer: true }
+
+5.3.	El nombre y el apellido deben tener una longitud mínima de 2 caracteres cada uno.
+validates :first_name, :last_name, length: { minimum: 2 }
+
+5.4.	La edad tiene que estar entre 10 y 150 (consulte http://apidock.com/rails/ActiveModel/Validations/HelperMethods/validates_numericality_of para obtener ayuda)
+validates :age, numericality: { only_integer: true, greater_than: 10, less_than: 150}
+
+5.5.	Estás familiarizado con .save  y  .valid?
+irb(main):025:0> usuario.valid?
+=> false
+
+5.6.	Utilice .errors  y  .errors.full_messages para que pueda ver o mostrar los mensajes de error cuando fallen las validaciones.
+["First name can't be blank",
+ "Last name can't be blank",
+ "Email address can't be blank",
+ "Age can't be blank",
+ "Age is not a number",
+ "First name is too short (minimum is 2 characters)",
  "Last name is too short (minimum is 2 characters)"]
 
 6.	Usando la consola de Rails...
